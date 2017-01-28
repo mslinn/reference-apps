@@ -1,5 +1,5 @@
 # Spark-Twitter-Lang-Classifier
-This program was built for Spark 2.0.1.
+This program was built for Spark 2.1.0.
 
 ## Registering An App with Twitter
 The programs in this project which interact with Twitter all share the same Twitter application ID.
@@ -25,7 +25,8 @@ This is only useful for checking out help messages and testing command line pars
 
 ## Assembling the Twitter Classifier Assembly
 A "fat jar" needs to be built from the source code and dependencies.
-Upon successfully building the assembly, you should be able to run the various Spark jobs as documented in the [Gitbook](https://www.gitbook.io/read/book/databricks/databricks-spark-reference-applications).
+Upon successfully building the assembly, you should be able to run the various Spark jobs as documented in the 
+[Gitbook](https://www.gitbook.io/read/book/databricks/databricks-spark-reference-applications).
 
 To build the assembly, run SBT using the `assembly` target:
 
@@ -40,3 +41,6 @@ The generated file will be called something like
    * `bin/collect` stores tweets in the `~/sparkTwitter/data/` subdirectory.
    * `bin/train` reads the tweets in the `~/sparkTwitter/data/` subdirectory, then stores a model into the `~/sparkTwitter/model/` subdirectory.
    * `bin/predict` uses the model to filter the stream.
+
+# For More Information
+See [this blog posting](http://blog.mslinn.com/blog/2016/11/15/lessons-from-updating-the-twitter-classifier-apache-spark-reference-application)
