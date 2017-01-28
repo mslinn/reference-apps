@@ -2,19 +2,33 @@ package com.databricks.apps
 
 package twitterClassifier {
   import org.apache.spark.SparkContext
-  import org.apache.spark.sql.SparkSession
+  import org.apache.spark.sql.{SQLContext, SparkSession}
 
   object SparkSetup {
-    val spark = SparkSession
-      .builder
-      .appName(getClass.getSimpleName.replace("$", ""))
-      .getOrCreate()
+    import org.apache.spark.SparkConf
+    val maybeMaster: Option[String] = new SparkConf().getOption("spark.master")
 
-    val sqlContext = spark.sqlContext
+    val spark: SparkSession =
+      if (maybeMaster.isDefined) {
+        println(s"Using master (${ maybeMaster.mkString }) specified on the command line.")
+        SparkSession
+          .builder
+          .appName(getClass.getSimpleName.replace("$", ""))
+          .getOrCreate()
+      } else {
+        println("No master was specified on the command line so running locally using all cores.")
+        SparkSession
+          .builder
+          .master("local[*]")
+          .appName(getClass.getSimpleName.replace("$", ""))
+          .getOrCreate()
+      }
 
-    val sc: SparkContext = spark.sparkContext
-    // Suppress "WARN BlockManager: Block input-0-1478266015800 replicated to only 0 peer(s) instead of 1 peers" messages
-    sc.setLogLevel("ERROR")
+      val sqlContext: SQLContext = spark.sqlContext
+
+      val sc: SparkContext = spark.sparkContext
+      // Suppress "WARN BlockManager: Block input-0-1478266015800 replicated to only 0 peer(s) instead of 1 peers" messages
+      sc.setLogLevel("ERROR")
   }
 }
 
