@@ -1,2 +1,11 @@
 **~
 **.sw?
+**.iml
+*.log
+out/**
+**/*.pyc
+**/.idea/**
+**/target/**
+**/project/**
+**/.DS_Store
+**/META-INF/**
